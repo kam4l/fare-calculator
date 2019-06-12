@@ -16,6 +16,18 @@ public class CarRentalEnquiryRequest {
 
     private Boolean airConditioned;
 
+    public CarRentalEnquiryRequest(final String vehicleType,
+                                   final String vehicleFuel,
+                                   final List<String> travelRoute,
+                                   final Integer passengerCount,
+                                   final Boolean airConditioned) {
+        this.vehicleType = vehicleType;
+        this.vehicleFuel = vehicleFuel;
+        this.travelRoute = travelRoute;
+        this.passengerCount = passengerCount;
+        this.airConditioned = airConditioned;
+    }
+
     public String getVehicleType() {
         return vehicleType;
     }

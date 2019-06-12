@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.ws.rs.BadRequestException;
 
+import static com.car.rent.farecalculator.validator.RequestValidator.validateRequest;
+
 @RestController
 public class FareCalculatorController {
 
@@ -25,6 +27,7 @@ public class FareCalculatorController {
 
     @PostMapping("/calculateFare")
     public CarRentalExpense calculateFare(@RequestBody CarRentalEnquiryRequest rentalEnquiryRequest) {
+        validateRequest(rentalEnquiryRequest);
         return calculateFareService.calculateCarRentalExpense(rentalEnquiryRequest);
     }
 
