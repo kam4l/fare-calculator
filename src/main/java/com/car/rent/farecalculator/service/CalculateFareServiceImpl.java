@@ -4,6 +4,7 @@ import com.car.rent.farecalculator.beans.CarRentalEnquiryRequest;
 import com.car.rent.farecalculator.beans.CarRentalExpense;
 import com.car.rent.farecalculator.beans.CarRentalResponseHolder;
 import com.car.rent.farecalculator.beans.TravelRoute;
+import com.car.rent.farecalculator.constant.CarRentalConstants.VEHICLE_FUEL;
 import com.car.rent.farecalculator.repository.CarRentalRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.car.rent.farecalculator.constant.CarRentalConstants.VEHICLE_TYPE_BUS;
 
 @Service
 public class CalculateFareServiceImpl implements CalculateFareService {
@@ -45,7 +48,7 @@ public class CalculateFareServiceImpl implements CalculateFareService {
                 .toBlocking()
                 .single();
 
-        Integer maxPassenger = carRentalRepository.getMaxPassengerCount(carRentalResponseHolder.getVehicleType());
+        final Integer maxPassenger = carRentalRepository.getMaxPassengerCount(carRentalResponseHolder.getVehicleType());
 
         final double standardRate = calculateStandardRate(carRentalEnquiryRequest, carRentalResponseHolder.getRatePerHour(), carRentalResponseHolder.getVehicleType());
 
@@ -79,9 +82,10 @@ public class CalculateFareServiceImpl implements CalculateFareService {
                 .sum();
     }
 
-    private double calculateStandardRate(final CarRentalEnquiryRequest carRentalEnquiryRequest, Double rate, String vehicleType) {
+    private double calculateStandardRate(final CarRentalEnquiryRequest carRentalEnquiryRequest,
+                                         Double rate, final String vehicleType) {
 
-        if (StringUtils.equalsIgnoreCase(carRentalEnquiryRequest.getVehicleFuel(), "DIESEL")) {
+        if (StringUtils.equalsIgnoreCase(carRentalEnquiryRequest.getVehicleFuel(), VEHICLE_FUEL.DIESEL.name())) {
             rate = rate - 1;
         }
 
@@ -89,7 +93,7 @@ public class CalculateFareServiceImpl implements CalculateFareService {
             rate = rate + 2;
         }
 
-        if (StringUtils.equalsIgnoreCase(vehicleType, "BUS")) {
+        if (StringUtils.equalsIgnoreCase(vehicleType, VEHICLE_TYPE_BUS)) {
             rate = rate - (rate * 2 / 100);
         }
         return rate;
