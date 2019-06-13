@@ -4,14 +4,11 @@ import com.car.rent.farecalculator.beans.CarRentalEnquiryRequest;
 import com.car.rent.farecalculator.beans.CarRentalExpense;
 import com.car.rent.farecalculator.service.CalculateFareService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.BadRequestException;
+import javax.validation.Valid;
 
 import static com.car.rent.farecalculator.validator.RequestValidator.validateRequest;
 
@@ -26,13 +23,9 @@ public class FareCalculatorController {
     }
 
     @PostMapping("/calculateFare")
-    public CarRentalExpense calculateFare(@RequestBody CarRentalEnquiryRequest rentalEnquiryRequest) {
+    public CarRentalExpense calculateFare(@Valid @RequestBody CarRentalEnquiryRequest rentalEnquiryRequest) {
         validateRequest(rentalEnquiryRequest);
         return calculateFareService.calculateCarRentalExpense(rentalEnquiryRequest);
     }
 
-    @ExceptionHandler(value = BadRequestException.class)
-    public ResponseEntity badRequest(final BadRequestException ex){
-        return new ResponseEntity(ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
 }

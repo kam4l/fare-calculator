@@ -1,7 +1,14 @@
 package com.car.rent.farecalculator.repository;
 
-public interface CarRentalRepository {
-    double getDistance(String origin, String destination);
+import rx.Observable;
 
-    int getMaxPassengerCount(String vehicleType);
+public interface CarRentalRepository {
+
+    Observable<Double> getDistance(String origin, String destination);
+
+    Integer getMaxPassengerCount(String vehicleType);
+
+    Observable<Double> getRatePerHour();
+
+    Observable<String> getVehicleType(String vehicleName);
 }

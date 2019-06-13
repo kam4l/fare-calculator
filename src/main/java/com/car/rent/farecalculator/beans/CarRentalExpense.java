@@ -1,13 +1,14 @@
 package com.car.rent.farecalculator.beans;
 
 public class CarRentalExpense {
-    private double  estimatedExpense;
+    private Double  estimatedExpense;
 
-    public double getEstimatedExpense() {
+    public CarRentalExpense(Double  estimatedExpense) {
+        this.estimatedExpense = estimatedExpense;
+    }
+
+    public Double getEstimatedExpense() {
         return estimatedExpense;
     }
 
-    public void setEstimatedExpense(double estimatedExpense) {
-        this.estimatedExpense = estimatedExpense;
-    }
 }

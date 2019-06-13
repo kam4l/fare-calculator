@@ -31,8 +31,7 @@ public class FareCalculatorControllerTest {
     public void testSuccessfulFareEstimation(){
         // given
         // Service responds with success response
-        final CarRentalExpense expectedResponse = new CarRentalExpense();
-        expectedResponse.setEstimatedExpense(3000d);
+        final CarRentalExpense expectedResponse = new CarRentalExpense(3000d);
         final CarRentalEnquiryRequest request = new CarRentalEnquiryRequest("suv",
                 "petrol",
                 Arrays.asList("pune", "mumbai"),
